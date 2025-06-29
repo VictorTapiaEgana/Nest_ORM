@@ -3,6 +3,7 @@ import { Column, DeleteDateColumn, Entity, PrimaryGeneratedColumn } from "typeor
 @Entity()
 
 export class Animal {
+    
     @PrimaryGeneratedColumn()
     id:number;
 
@@ -12,9 +13,13 @@ export class Animal {
     @Column()
     edad:number;
 
+    @Column()
+    color:string;
+
     @Column({ nullable:true})
     raza?:string
 
     @DeleteDateColumn()
     borradoEn?:Date;
+
 }

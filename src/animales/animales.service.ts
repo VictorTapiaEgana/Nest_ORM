@@ -19,25 +19,27 @@ export class AnimalesService {
     return this.animalesRepocitory.find()
   }
 
+  async create(createAnimaleDto: CreateAnimaleDto) {
 
-  create(createAnimaleDto: CreateAnimaleDto) {
-
-    const animal = this.animalesRepocitory.create(createAnimaleDto)
+    const animal =  this.animalesRepocitory.create(createAnimaleDto)
     this.animalesRepocitory.save(animal)
 
-    return 'This action adds a new animale';
-
+    return `${createAnimaleDto.nombre} Creado exitosamente`;
  }
 
-  findOne(id: number) {
-    return `This action returns a #${id} animale`;
+  async findOne(id: number) {
+    return await this.animalesRepocitory.findOneBy({ id });
   }
 
-  update(id: number, updateAnimaleDto: UpdateAnimaleDto) {
-    return `This action updates a #${id} animale`;
+  async update(id: number, updateAnimaleDto: UpdateAnimaleDto) {
+
+    const animal = this.animalesRepocitory.create(updateAnimaleDto)
+    return await this.animalesRepocitory.update(id, animal)
+    
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} animale`;
+  async remove(id: number) {
+    return await this.animalesRepocitory.softDelete({id})
   }
+
 }

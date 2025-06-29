@@ -9,6 +9,9 @@ export class CreateAnimaleDto {
         @IsPositive()
         edad:number;
 
+        @IsString()
+        color:string
+        
         @IsOptional()
         @IsString()
         raza?:string

@@ -9,4 +9,5 @@ import { Animal } from './entities/animale.entity';
   controllers: [AnimalesController],
   providers: [AnimalesService],
 })
+
 export class AnimalesModule {}
