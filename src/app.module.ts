@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { AnimalesModule } from './animales/animales.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { RazasModule } from './razas/razas.module';
 
 @Module({
   imports: [AnimalesModule,
@@ -13,7 +14,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
                     database:'animales',                    
                     autoLoadEntities:true,
                     synchronize:true,                    
-            })  
+            }),
+            RazasModule  
   ],
   
   controllers: [],

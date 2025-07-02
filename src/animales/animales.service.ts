@@ -1,9 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateAnimaleDto } from './dto/create-animale.dto';
 import { UpdateAnimaleDto } from './dto/update-animale.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Animal } from './entities/animale.entity';
 import { Repository } from 'typeorm';
+import { Raza } from 'src/razas/entities/raza.entity';
 
 @Injectable()
 export class AnimalesService {
@@ -11,7 +12,10 @@ export class AnimalesService {
   constructor(
 
     @InjectRepository(Animal)
-     private animalesRepocitory:Repository<Animal>
+     private animalesRepocitory:Repository<Animal>,
+
+    @InjectRepository(Raza)
+    private readonly razaRepocitory:Repository<Raza>
 
   ){}
 
@@ -21,8 +25,22 @@ export class AnimalesService {
 
   async create(createAnimaleDto: CreateAnimaleDto) {
 
-    const animal =  this.animalesRepocitory.create(createAnimaleDto)
-    this.animalesRepocitory.save(animal)
+    const raza = await this.razaRepocitory.findOneBy({
+      id_raza: createAnimaleDto.raza
+    })
+
+    if(!raza){
+      throw new BadRequestException('Raza no existe')
+    }
+
+      const animal =  this.animalesRepocitory.create({
+        nombre:createAnimaleDto.nombre,
+        edad:createAnimaleDto.edad,
+        color:createAnimaleDto.color,        
+        raza        
+      })
+
+      await this.animalesRepocitory.save(animal)
 
     return `${createAnimaleDto.nombre} Creado exitosamente`;
  }
@@ -33,8 +51,8 @@ export class AnimalesService {
 
   async update(id: number, updateAnimaleDto: UpdateAnimaleDto) {
 
-    const animal = this.animalesRepocitory.create(updateAnimaleDto)
-    return await this.animalesRepocitory.update(id, animal)
+    // const animal = this.animalesRepocitory.create(updateAnimaleDto)
+    // return await this.animalesRepocitory.update(id, animal)
     
   }
 

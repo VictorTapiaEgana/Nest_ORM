@@ -12,8 +12,8 @@ export class CreateAnimaleDto {
         @IsString()
         color:string
         
-        @IsOptional()
-        @IsString()
-        raza?:string
+        @IsInt() 
+        @IsPositive()
+        raza:number
 
 }

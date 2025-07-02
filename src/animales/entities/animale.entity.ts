@@ -1,4 +1,5 @@
-import { Column, DeleteDateColumn, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Raza } from "src/razas/entities/raza.entity";
+import { Column, DeleteDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 
@@ -16,10 +17,10 @@ export class Animal {
     @Column()
     color:string;
 
-    @Column({ nullable:true})
-    raza?:string
-
     @DeleteDateColumn()
     borradoEn?:Date;
+
+    @ManyToOne(()=>Raza,(raza)=>raza.animales , {eager:true})
+     raza:Raza;
 
 }
